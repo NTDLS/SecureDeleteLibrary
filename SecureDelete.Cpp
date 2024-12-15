@@ -141,23 +141,23 @@ bool OverwriteFileName(const char *sFileName, char *sLastFileName)
 //
 // SecureOverwrite
 //
-// This function implements a secure santize of rigid (removable 
+// This function implements a secure sanitize of rigid (removable 
 // and fixed) disk media as per the Department of Defense clearing 
 // and sanitizing standard: DOD 5220.22-M
 // 
-// The standard states that hard disk media is sanatized by 
+// The standard states that hard disk media is sanitized by 
 // overwriting with a character, then the character's complement,
-// and then a random character. Note that the standard specicically
+// and then a random character. Note that the standard specifically
 // states that this method is not suitable for TOP SECRET information.
-// TOP SECRET data sanatizing is only achievable by a Type 1 or 2 
+// TOP SECRET data sanitizing is only achievable by a Type 1 or 2 
 // degauss of the disk, or by disintegrating, incinerating, 
-// pulverizing, shreding, or melting the disk.
+// pulverizing, shredding, or melting the disk.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool SecureOverwrite( HANDLE FileHandle, unsigned __int64 Length, DWORD dwNumPasses)
 {
 	static PBYTE cleanBuffer[3];
-	static bool	buffersAlloced = false;
+	static bool	buffersAllocated = false;
 
 	DWORD			i, j, passes;
 	ULONGLONG		totalWritten;
@@ -165,7 +165,7 @@ bool SecureOverwrite( HANDLE FileHandle, unsigned __int64 Length, DWORD dwNumPas
 	LARGE_INTEGER	seekLength;
 
 	// Allocate our cleaning buffers if necessary (we just let program exit free the buffers).
-	if( !buffersAlloced )
+	if( !buffersAllocated )
 	{
 		// Seed the random number generator
 		srand( (unsigned)time( NULL ) );
@@ -199,7 +199,7 @@ bool SecureOverwrite( HANDLE FileHandle, unsigned __int64 Length, DWORD dwNumPas
 					break;
 			}
 		}	
-		buffersAlloced = true;
+		buffersAllocated = true;
 	}
 
 	// Do the overwrite
